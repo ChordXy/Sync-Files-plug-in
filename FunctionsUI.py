@@ -6,6 +6,28 @@ import json
 import os
 
 
+class MyButton(QPushButton, QWidget):
+    def __init__(self, parent):
+        super(MyButton, self).__init__(parent)
+        self.mouse_isMoved = False
+        self.PresentPosition = None
+    
+    def mousePressEvent(self, event):
+        self.Origin_Point = event.globalPos()
+        self.mouse_isMoved = True
+        self.PresentPosition = self.frameGeometry().topLeft()
+    
+    def mouseReleaseEvent(self, event):
+        self.mouse_isMoved = False
+    
+    def mouseMoveEvent(self, event):
+        if self.mouse_isMoved:
+            # print("Origin Position : ", self.Origin_Point)
+            # print("Present Position : ", event.globalPos())
+            # print("Difference : ", event.globalPos() - self.Origin_Point)
+            self.move(event.globalPos() - self.Origin_Point + self.PresentPosition)
+
+
 class setupUIFunctions():
     def __init__(self, Window):
         self.Window = Window
