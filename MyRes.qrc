@@ -1,5 +1,8 @@
 <RCC>
   <qresource prefix="Icons">
+    <file>Resources/EmptyFile-Clear.png</file>
+    <file>Resources/EmptyFile-hover.png</file>
+    <file>Resources/EmptyFile-OK.png</file>
     <file>Resources/EmptyFile.png</file>
     <file>Resources/File.png</file>
     <file>Resources/File-hover.png</file>

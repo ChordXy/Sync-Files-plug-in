@@ -104,12 +104,24 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="3,2">
+         <layout class="QHBoxLayout" name="horizontalLayout_6" stretch="3,0">
           <item>
            <widget class="QTextEdit" name="textEdit_Display_Source"/>
           </item>
           <item>
-           <widget class="QLabel" name="label_Display_Source">
+           <widget class="QPushButton" name="pushButton_SrcClear">
+            <property name="minimumSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">border-image: url(:/Icons/Resources/EmptyFile.png);</string>
             </property>
@@ -199,12 +211,24 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="3,2">
+         <layout class="QHBoxLayout" name="horizontalLayout_7" stretch="3,0">
           <item>
            <widget class="QTextEdit" name="textEdit_Display_Destiny"/>
           </item>
           <item>
-           <widget class="QLabel" name="label_Display_Destiny">
+           <widget class="QPushButton" name="pushButton_DstClear">
+            <property name="minimumSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>70</width>
+              <height>70</height>
+             </size>
+            </property>
             <property name="styleSheet">
              <string notr="true">border-image: url(:/Icons/Resources/EmptyFile.png);</string>
             </property>

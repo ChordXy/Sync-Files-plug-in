@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'E:\Chordxy\自写代码\快捷同步\FastSyncUI.ui'
+# Form implementation generated from reading ui file 'E:\Chordxy\自写代码\快捷同步\Sync-Files-plug-in\FastSyncUI.ui'
 #
 # Created by: PyQt5 UI code generator 5.13.0
 #
@@ -59,13 +59,14 @@ class Ui_MainWindow(object):
         self.textEdit_Display_Source = QtWidgets.QTextEdit(self.centralwidget)
         self.textEdit_Display_Source.setObjectName("textEdit_Display_Source")
         self.horizontalLayout_6.addWidget(self.textEdit_Display_Source)
-        self.label_Display_Source = QtWidgets.QLabel(self.centralwidget)
-        self.label_Display_Source.setStyleSheet("border-image: url(:/Icons/Resources/EmptyFile.png);")
-        self.label_Display_Source.setText("")
-        self.label_Display_Source.setObjectName("label_Display_Source")
-        self.horizontalLayout_6.addWidget(self.label_Display_Source)
+        self.pushButton_SrcClear = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_SrcClear.setMinimumSize(QtCore.QSize(70, 70))
+        self.pushButton_SrcClear.setMaximumSize(QtCore.QSize(70, 70))
+        self.pushButton_SrcClear.setStyleSheet("border-image: url(:/Icons/Resources/EmptyFile.png);")
+        self.pushButton_SrcClear.setText("")
+        self.pushButton_SrcClear.setObjectName("pushButton_SrcClear")
+        self.horizontalLayout_6.addWidget(self.pushButton_SrcClear)
         self.horizontalLayout_6.setStretch(0, 3)
-        self.horizontalLayout_6.setStretch(1, 2)
         self.verticalLayout.addLayout(self.horizontalLayout_6)
         self.horizontalLayout_8.addLayout(self.verticalLayout)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
@@ -102,13 +103,14 @@ class Ui_MainWindow(object):
         self.textEdit_Display_Destiny = QtWidgets.QTextEdit(self.centralwidget)
         self.textEdit_Display_Destiny.setObjectName("textEdit_Display_Destiny")
         self.horizontalLayout_7.addWidget(self.textEdit_Display_Destiny)
-        self.label_Display_Destiny = QtWidgets.QLabel(self.centralwidget)
-        self.label_Display_Destiny.setStyleSheet("border-image: url(:/Icons/Resources/EmptyFile.png);")
-        self.label_Display_Destiny.setText("")
-        self.label_Display_Destiny.setObjectName("label_Display_Destiny")
-        self.horizontalLayout_7.addWidget(self.label_Display_Destiny)
+        self.pushButton_DstClear = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_DstClear.setMinimumSize(QtCore.QSize(70, 70))
+        self.pushButton_DstClear.setMaximumSize(QtCore.QSize(70, 70))
+        self.pushButton_DstClear.setStyleSheet("border-image: url(:/Icons/Resources/EmptyFile.png);")
+        self.pushButton_DstClear.setText("")
+        self.pushButton_DstClear.setObjectName("pushButton_DstClear")
+        self.horizontalLayout_7.addWidget(self.pushButton_DstClear)
         self.horizontalLayout_7.setStretch(0, 3)
-        self.horizontalLayout_7.setStretch(1, 2)
         self.verticalLayout_2.addLayout(self.horizontalLayout_7)
         self.horizontalLayout_8.addLayout(self.verticalLayout_2)
         self.line = QtWidgets.QFrame(self.centralwidget)

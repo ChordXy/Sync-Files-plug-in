@@ -9,6 +9,8 @@ import os
 class setupUIFunctions():
     def __init__(self, Window):
         self.Window = Window
+        self.SrcDirectory = None
+        self.DstDirectory = None
         # 建立UI功能
         self.setupUIFunctions()
 
@@ -46,6 +48,14 @@ class setupUIFunctions():
             "QPushButton:hover{border-image: url(:/Icons/Resources/File-hover.png);}"
             "QPushButton:pressed{border-image: url(:/Icons/Resources/File-press.png);}")
 
+        self.Window.pushButton_SrcClear.setStyleSheet("QPushButton{border-image: url(:/Icons/Resources/EmptyFile.png);}"
+            "QPushButton:hover{border-image: url(:/Icons/Resources/EmptyFile-hover.png);}"
+            "QPushButton:pressed{border-image: url(:/Icons/Resources/EmptyFile-Clear.png);}")
+
+        self.Window.pushButton_DstClear.setStyleSheet("QPushButton{border-image: url(:/Icons/Resources/EmptyFile.png);}"
+            "QPushButton:hover{border-image: url(:/Icons/Resources/EmptyFile-hover.png);}"
+            "QPushButton:pressed{border-image: url(:/Icons/Resources/EmptyFile-Clear.png);}")
+
     def connectSignals2Slots(self):
         # 添加
         self.Window.pushButton_add.clicked.connect(self.AddNewSyncPair)
@@ -63,13 +73,24 @@ class setupUIFunctions():
         self.Window.pushButton_OpenSrouce.clicked.connect(self.getSrcDirectory)
         # 打开目标文件夹
         self.Window.pushButton_OpenDestiny.clicked.connect(self.getDstDirectory)
-        
+        # 点击Src清空文本框
+        self.Window.pushButton_SrcClear.clicked.connect(self.ClearSrcText)
+        # 点击Dst清空文本框
+        self.Window.pushButton_DstClear.clicked.connect(self.ClearDstText)
+
+        # Src文本框变化
+        self.Window.textEdit_Display_Source.textChanged.connect(self.SrcFileCheck)
+        # Dst文本框变化
+        self.Window.textEdit_Display_Destiny.textChanged.connect(self.DstFileCheck)
+
         # 退出
         self.Window.pushButton_Quit.clicked.connect(lambda:self.QuitThisApp())
 
         
     def QuitThisApp(self):
-        self.Window.close()
+        # 避免退出程序后，托盘区的小图标依旧在
+        self.Window.tray.setVisible(False)
+        QApplication.instance().quit()
     
     def AddNewSyncPair(self):
         print("Yes")
@@ -90,11 +111,57 @@ class setupUIFunctions():
         print("Yes")
 
     def getSrcDirectory(self):
-        print("Yes")
+        fname = QFileDialog.getExistingDirectory(self.Window, '选择路径', './')
+        if os.path.exists(fname):
+            self.SrcDirectory = fname
+            self.Window.textEdit_Display_Source.setText(fname)
+        else:
+            self.Window.textEdit_Display_Source.setText("错误路径")
 
     def getDstDirectory(self):
-        print("Yes")
+        fname = QFileDialog.getExistingDirectory(self.Window, '选择路径', './')
+        if os.path.exists(fname):
+            self.SrcDirectory = fname
+            self.Window.textEdit_Display_Destiny.setText(fname)
+        else:
+            self.Window.textEdit_Display_Destiny.setText("错误路径")
 
+    def SrcFileCheck(self):
+        text = self.Window.textEdit_Display_Source.toPlainText()
+        text = text.replace("file:///", '')
+        if os.path.exists(text):
+            self.Window.pushButton_SrcClear.setStyleSheet("QPushButton{border-image: url(:/Icons/Resources/EmptyFile-OK.png);}"
+                "QPushButton:hover{border-image: url(:/Icons/Resources/EmptyFile-hover.png);}"
+                "QPushButton:pressed{border-image: url(:/Icons/Resources/EmptyFile-Clear.png);}")
+            self.SrcDirectory = text
 
+    def ClearSrcText(self):
+        self.Window.textEdit_Display_Source.clear()
+        self.Window.pushButton_SrcClear.setStyleSheet("QPushButton{border-image: url(:/Icons/Resources/EmptyFile.png);}"
+            "QPushButton:hover{border-image: url(:/Icons/Resources/EmptyFile-hover.png);}"
+            "QPushButton:pressed{border-image: url(:/Icons/Resources/EmptyFile-Clear.png);}")
+        self.SrcDirectory = None
+
+    def DstFileCheck(self):
+        text = self.Window.textEdit_Display_Destiny.toPlainText()
+        text = text.replace("file:///", '')
+        if os.path.exists(text):
+            self.Window.pushButton_DstClear.setStyleSheet("QPushButton{border-image: url(:/Icons/Resources/EmptyFile-OK.png);}"
+                "QPushButton:hover{border-image: url(:/Icons/Resources/EmptyFile-hover.png);}"
+                "QPushButton:pressed{border-image: url(:/Icons/Resources/EmptyFile-Clear.png);}")
+            self.DstDirectory = text
+    
+    def ClearDstText(self):
+        self.Window.textEdit_Display_Destiny.clear()
+        self.Window.pushButton_DstClear.setStyleSheet("QPushButton{border-image: url(:/Icons/Resources/EmptyFile.png);}"
+            "QPushButton:hover{border-image: url(:/Icons/Resources/EmptyFile-hover.png);}"
+            "QPushButton:pressed{border-image: url(:/Icons/Resources/EmptyFile-Clear.png);}")
+        self.DstDirectory = None
+
+    def AddNewMenu(self):
+        mAction = QAction("Mini&mize1", self.Window, triggered = self.Window.hide)
+        self.Window.trayMenu.addAction(mAction)
+        self.Window.tray.setContextMenu(self.Window.trayMenu)
+        self.Window.tray.show()
 
  
