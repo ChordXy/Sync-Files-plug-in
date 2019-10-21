@@ -1,0 +1,21 @@
+<RCC>
+  <qresource prefix="Icons">
+    <file>Resources/EmptyFile.png</file>
+    <file>Resources/File.png</file>
+    <file>Resources/File-hover.png</file>
+    <file>Resources/File-press.png</file>
+    <file>Resources/Add-5.png</file>
+    <file>Resources/Add-5-hover.png</file>
+    <file>Resources/Add-5-press.png</file>
+    <file>Resources/ArrowLeft.png</file>
+    <file>Resources/ArrowLeft-hover.png</file>
+    <file>Resources/ArrowLeft-press.png</file>
+    <file>Resources/ArrowRight.png</file>
+    <file>Resources/ArrowRight-hover.png</file>
+    <file>Resources/ArrowRight-press.png</file>
+    <file>Resources/online-conference.png</file>
+    <file>Resources/Trashbin-2.png</file>
+    <file>Resources/Trashbin-2-hover.png</file>
+    <file>Resources/Trashbin-2-press.png</file>
+  </qresource>
+</RCC>
