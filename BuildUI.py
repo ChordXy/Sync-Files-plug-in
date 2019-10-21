@@ -1,5 +1,5 @@
 import sys
-import ctypes
+import platform
 import datetime
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -51,13 +51,19 @@ class MyWindow(QMainWindow, Ui_MainWindow):
         self.hide()     # 隐藏窗体
 
 if __name__ == "__main__":
-    whnd = ctypes.windll.kernel32.GetConsoleWindow()
-    if whnd != 0:
-        ctypes.windll.user32.ShowWindow(whnd, 0)
-        ctypes.windll.kernel32.CloseHandle(whnd)
-    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("myappid")
+    if platform.system() == 'Windows':
+        import ctypes
+        whnd = ctypes.windll.kernel32.GetConsoleWindow()
+        if whnd != 0:
+            ctypes.windll.user32.ShowWindow(whnd, 0)
+            ctypes.windll.kernel32.CloseHandle(whnd)
+        ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("myappid")
+    else:
+        pass
 
     app = QApplication(sys.argv)
+    if platform.system() == 'Darwin':
+        app.setWindowIcon(QIcon('./Resources/MacOSIcon.icns'))
     window = MyWindow()
     window.show()
     sys.exit(app.exec_())
