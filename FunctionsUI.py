@@ -15,11 +15,16 @@ class MyButton(QPushButton, QWidget):
         self.tly = border.topLeft().y()
         self.brx = border.bottomRight().x() - 110
         self.bry = border.bottomRight().y() - 110
+        self.justClicked = False
+        self.Selected = False
+        self.setStyleSheet("QPushButton{border-image: url(:/Icons/Resources/File.png)}")
+        self.setText("")
     
     def mousePressEvent(self, event):
         self.Origin_Point = event.globalPos()
         self.mouse_isMoved = True
         self.PresentPosition = self.frameGeometry().topLeft()
+        self.justClicked = True
     
     def mouseReleaseEvent(self, event):
         self.mouse_isMoved = False
@@ -28,6 +33,13 @@ class MyButton(QPushButton, QWidget):
         x_Position = ((sP_x - 1) // 130) * 130 + 11 + self.tlx
         y_Position = (sP_y // 118) * 120 + 3 + self.tly
         self.move(QPoint(x_Position, y_Position))
+        if self.justClicked == True:
+            if self.Selected == False:
+                self.setStyleSheet("QPushButton{border-image: url(:/Icons/Resources/File-press.png)}")
+                self.Selected = True
+            else:
+                self.setStyleSheet("QPushButton{border-image: url(:/Icons/Resources/File.png)}")
+                self.Selected = False
     
     def mouseMoveEvent(self, event):
         if self.mouse_isMoved:
@@ -37,6 +49,7 @@ class MyButton(QPushButton, QWidget):
             toMove = event.globalPos() - self.Origin_Point + self.PresentPosition
             toMove_x = toMove.x()
             toMove_y = toMove.y()
+            self.justClicked = False
             if toMove_x <= self.tlx or toMove_x >= self.brx or toMove_y <= self.tly or toMove_y >= self.bry:
                 return
             else:
@@ -48,7 +61,6 @@ class setupUIFunctions():
         self.Window = Window
         self.SrcDirectory = None
         self.DstDirectory = None
-        # 建立UI功能
         self.setupUIFunctions()
 
     def setupUIFunctions(self):
@@ -60,7 +72,7 @@ class setupUIFunctions():
         pass
 
     def InitStyle(self):
-        # 按钮样式
+        # 设置按钮样式
         self.Window.pushButton_add.setStyleSheet("QPushButton{border-image: url(:/Icons/Resources/Add-5.png);}"
             "QPushButton:hover{border-image: url(:/Icons/Resources/Add-5-hover.png);}"
             "QPushButton:pressed{border-image: url(:/Icons/Resources/Add-5-press.png);}")
@@ -94,7 +106,7 @@ class setupUIFunctions():
             "QPushButton:pressed{border-image: url(:/Icons/Resources/EmptyFile-Clear.png);}")
 
     def connectSignals2Slots(self):
-        # 添加
+        # 增加
         self.Window.pushButton_add.clicked.connect(self.AddNewSyncPair)
         # 删除
         self.Window.pushButton_Delete.clicked.connect(self.DeleteSyncPair)
@@ -106,18 +118,18 @@ class setupUIFunctions():
         self.Window.pushButton_Uploads.clicked.connect(self.SyncUpload)
         # 下载
         self.Window.pushButton_Downloads.clicked.connect(self.SyncDownload)
-        # 打开源文件夹
+        # 打开源文件
         self.Window.pushButton_OpenSrouce.clicked.connect(self.getSrcDirectory)
-        # 打开目标文件夹
+        # 打开目标文件
         self.Window.pushButton_OpenDestiny.clicked.connect(self.getDstDirectory)
-        # 点击Src清空文本框
+        # 清除源文件文本
         self.Window.pushButton_SrcClear.clicked.connect(self.ClearSrcText)
-        # 点击Dst清空文本框
+        # 清除目标文件文本
         self.Window.pushButton_DstClear.clicked.connect(self.ClearDstText)
 
-        # Src文本框变化
+        # 源文件文本变动
         self.Window.textEdit_Display_Source.textChanged.connect(self.SrcFileCheck)
-        # Dst文本框变化
+        # 目标文件文本变动
         self.Window.textEdit_Display_Destiny.textChanged.connect(self.DstFileCheck)
 
         # 退出
@@ -125,13 +137,12 @@ class setupUIFunctions():
 
         
     def QuitThisApp(self):
-        # 避免退出程序后，托盘区的小图标依旧在
+        # 防止退出后系统托盘区图标依然存在问题
         self.Window.tray.setVisible(False)
         QApplication.instance().quit()
     
     def AddNewSyncPair(self):
         self.Window.btn = MyButton(self.Window.centralwidget, self.Window.frame_Display.frameGeometry())
-        self.Window.btn.setText("213")
         self.Window.btn.resize(110, 110)
 
         position = self.Window.frame_Display.frameGeometry().topLeft() + QPoint(1, 3) + QPoint(10, 0)
@@ -160,7 +171,7 @@ class setupUIFunctions():
             self.SrcDirectory = fname
             self.Window.textEdit_Display_Source.setText(fname)
         else:
-            self.Window.textEdit_Display_Source.setText("错误路径")
+            self.Window.textEdit_Display_Source.setText("路径选择错误")
 
     def getDstDirectory(self):
         fname = QFileDialog.getExistingDirectory(self.Window, '选择路径', './')
@@ -168,7 +179,7 @@ class setupUIFunctions():
             self.SrcDirectory = fname
             self.Window.textEdit_Display_Destiny.setText(fname)
         else:
-            self.Window.textEdit_Display_Destiny.setText("错误路径")
+            self.Window.textEdit_Display_Destiny.setText("路径选择错误")
 
     def SrcFileCheck(self):
         text = self.Window.textEdit_Display_Source.toPlainText()
