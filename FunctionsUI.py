@@ -7,10 +7,14 @@ import os
 
 
 class MyButton(QPushButton, QWidget):
-    def __init__(self, parent):
+    def __init__(self, parent, border):
         super(MyButton, self).__init__(parent)
         self.mouse_isMoved = False
         self.PresentPosition = None
+        self.tlx = border.topLeft().x()
+        self.tly = border.topLeft().y()
+        self.brx = border.bottomRight().x() - 110
+        self.bry = border.bottomRight().y() - 110
     
     def mousePressEvent(self, event):
         self.Origin_Point = event.globalPos()
@@ -19,13 +23,24 @@ class MyButton(QPushButton, QWidget):
     
     def mouseReleaseEvent(self, event):
         self.mouse_isMoved = False
+        sP_x = self.frameGeometry().topLeft().x() - self.tlx
+        sP_y = self.frameGeometry().topLeft().y() - self.tly
+        x_Position = ((sP_x - 1) // 130) * 130 + 11 + self.tlx
+        y_Position = (sP_y // 118) * 120 + 3 + self.tly
+        self.move(QPoint(x_Position, y_Position))
     
     def mouseMoveEvent(self, event):
         if self.mouse_isMoved:
             # print("Origin Position : ", self.Origin_Point)
             # print("Present Position : ", event.globalPos())
             # print("Difference : ", event.globalPos() - self.Origin_Point)
-            self.move(event.globalPos() - self.Origin_Point + self.PresentPosition)
+            toMove = event.globalPos() - self.Origin_Point + self.PresentPosition
+            toMove_x = toMove.x()
+            toMove_y = toMove.y()
+            if toMove_x <= self.tlx or toMove_x >= self.brx or toMove_y <= self.tly or toMove_y >= self.bry:
+                return
+            else:
+                self.move(toMove)
 
 
 class setupUIFunctions():
@@ -115,10 +130,17 @@ class setupUIFunctions():
         QApplication.instance().quit()
     
     def AddNewSyncPair(self):
-        print("Yes")
+        self.Window.btn = MyButton(self.Window.centralwidget, self.Window.frame_Display.frameGeometry())
+        self.Window.btn.setText("213")
+        self.Window.btn.resize(110, 110)
+
+        position = self.Window.frame_Display.frameGeometry().topLeft() + QPoint(1, 3) + QPoint(10, 0)
+        self.Window.btn.move(position)
+        self.Window.btn.show()
+
 
     def DeleteSyncPair(self):
-        print("Yes")
+        print(self.Window.frame_Display.frameGeometry())
 
     def DoPageUp(self):
         print("Yes")
