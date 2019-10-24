@@ -50,6 +50,7 @@ class MyWindow(QMainWindow, Ui_MainWindow):
         event.ignore()  # 忽略关闭事件
         self.hide()     # 隐藏窗体
 
+
 if __name__ == "__main__":
     if platform.system() == 'Windows':
         import ctypes
@@ -68,4 +69,3 @@ if __name__ == "__main__":
     window.show()
     sys.exit(app.exec_())
 
-    
